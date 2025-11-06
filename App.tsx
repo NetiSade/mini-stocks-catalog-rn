@@ -31,7 +31,9 @@ export default function App() {
         <Stack.Screen
           name="StockDetail"
           component={StockDetailScreen}
-          options={{ title: "Stock Details" }}
+          options={({ route }) => ({
+            title: route.params.stock.ticker,
+          })}
         />
       </Stack.Navigator>
       <StatusBar style="auto" />
