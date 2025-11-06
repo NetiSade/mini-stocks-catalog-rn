@@ -1,19 +1,39 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { FlatList, Image, StyleSheet, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { STOCKS_MOCK_DATA, Stock } from "@/data/stocks";
-import { useThemeColor } from "@/hooks/use-theme-color";
+import { useThemeColors } from "@/hooks/use-theme-colors";
+import { RootStackScreenProps } from "@/types/navigation";
 
 export default function HomeScreen() {
-  const itemBackgroundColor = useThemeColor({}, "cardBackground");
-  const logoBackgroundColor = useThemeColor({}, "logoBackground");
+  const navigation =
+    useNavigation<RootStackScreenProps<"Home">["navigation"]>();
+  const colors = useThemeColors();
+
+  const handleStockPress = (stock: Stock) => {
+    navigation.navigate("StockDetail", { stock });
+  };
 
   const renderStockItem = ({ item }: { item: Stock }) => (
-    <View style={[styles.stockItem, { backgroundColor: itemBackgroundColor }]}>
+    <TouchableOpacity
+      style={[styles.stockItem, { backgroundColor: colors.cardBackground }]}
+      onPress={() => handleStockPress(item)}
+      activeOpacity={0.7}
+    >
       <View
-        style={[styles.logoContainer, { backgroundColor: logoBackgroundColor }]}
+        style={[
+          styles.logoContainer,
+          { backgroundColor: colors.logoBackground },
+        ]}
       >
         <Image
           source={{ uri: item.logoUrl }}
@@ -32,7 +52,7 @@ export default function HomeScreen() {
       <ThemedText type="defaultSemiBold" style={styles.price}>
         ${item.price.toFixed(2)}
       </ThemedText>
-    </View>
+    </TouchableOpacity>
   );
 
   return (

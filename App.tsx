@@ -10,8 +10,10 @@ import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import HomeScreen from "@/screens/HomeScreen";
+import StockDetailScreen from "@/screens/StockDetailScreen";
+import { RootStackParamList } from "@/types/navigation";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   const colorScheme = useColorScheme();
@@ -25,6 +27,11 @@ export default function App() {
           name="Home"
           component={HomeScreen}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="StockDetail"
+          component={StockDetailScreen}
+          options={{ title: "Stock Details" }}
         />
       </Stack.Navigator>
       <StatusBar style="auto" />

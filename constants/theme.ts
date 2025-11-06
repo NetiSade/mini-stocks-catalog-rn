@@ -5,10 +5,21 @@
 
 import { Platform } from "react-native";
 
+export interface ColorTheme {
+  text: string;
+  background: string;
+  tint: string;
+  icon: string;
+  tabIconDefault: string;
+  tabIconSelected: string;
+  cardBackground: string;
+  logoBackground: string;
+}
+
 const tintColorLight = "#0a7ea4";
 const tintColorDark = "#fff";
 
-export const Colors = {
+export const Colors: Record<"light" | "dark", ColorTheme> = {
   light: {
     text: "#11181C",
     background: "#fff",
