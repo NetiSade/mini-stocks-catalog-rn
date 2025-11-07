@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
@@ -24,6 +25,7 @@ export default function HomeScreen() {
   const colors = useThemeColors();
   const { toggleTheme, colorScheme } = useTheme();
   const { watchlistCount } = useWatchlist();
+  const insets = useSafeAreaInsets();
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredStocks = useMemo(() => {
@@ -134,7 +136,10 @@ export default function HomeScreen() {
         data={filteredStocks}
         renderItem={renderStockItem}
         keyExtractor={(item) => item.ticker}
-        contentContainerStyle={styles.listContent}
+        contentContainerStyle={[
+          styles.listContent,
+          { paddingBottom: insets.bottom + 20 },
+        ]}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
       />
     </ThemedView>
