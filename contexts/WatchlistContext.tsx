@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 
-const WATCHLIST_STORAGE_KEY = "@watchlist";
+import { STORAGE_KEYS } from "@/constants/storageKeys";
 
 interface WatchlistContextType {
   watchlist: string[];
@@ -39,7 +39,7 @@ export function WatchlistProvider({ children }: { children: ReactNode }) {
 
   const loadWatchlist = async () => {
     const savedWatchlist = await StorageService.getItem<string[]>(
-      WATCHLIST_STORAGE_KEY
+      STORAGE_KEYS.WATCHLIST
     );
     if (savedWatchlist) {
       setWatchlist(savedWatchlist);
@@ -48,7 +48,7 @@ export function WatchlistProvider({ children }: { children: ReactNode }) {
   };
 
   const saveWatchlist = async () => {
-    await StorageService.setItem(WATCHLIST_STORAGE_KEY, watchlist);
+    await StorageService.setItem(STORAGE_KEYS.WATCHLIST, watchlist);
   };
 
   const addToWatchlist = (ticker: string) => {

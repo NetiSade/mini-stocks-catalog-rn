@@ -1,4 +1,5 @@
-import { STORAGE_KEYS, StorageService } from "@/services/storage";
+import { STORAGE_KEYS } from "@/constants/storageKeys";
+import { StorageService } from "@/services/storage";
 import React, {
   createContext,
   ReactNode,

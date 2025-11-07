@@ -1,9 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const STORAGE_KEYS = {
-  USER_PREFERENCES: "@user_preferences",
-} as const;
-
 export const StorageService = {
   /**
    * Save data to storage
