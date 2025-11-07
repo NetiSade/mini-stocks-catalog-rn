@@ -80,7 +80,7 @@ export default function App() {
             })}
           />
         </Stack.Navigator>
-        <StatusBar style="auto" />
+        <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
       </NavigationContainer>
     </View>
   );
