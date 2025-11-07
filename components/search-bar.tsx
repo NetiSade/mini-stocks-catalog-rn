@@ -1,5 +1,12 @@
 import React from "react";
-import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  StyleProp,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -8,17 +15,19 @@ interface SearchBarProps {
   value: string;
   onChangeText: (text: string) => void;
   placeholder?: string;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
 export function SearchBar({
   value,
   onChangeText,
+  containerStyle,
   placeholder = "Search...",
 }: SearchBarProps) {
   const { colors } = useTheme();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       <View
         style={[styles.wrapper, { backgroundColor: colors.cardBackground }]}
       >
@@ -71,4 +80,3 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
 });
-

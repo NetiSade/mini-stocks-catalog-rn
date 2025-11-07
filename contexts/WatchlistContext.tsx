@@ -2,6 +2,7 @@ import { StorageService } from "@/services/storage";
 import React, {
   createContext,
   ReactNode,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -31,11 +32,15 @@ export function WatchlistProvider({ children }: { children: ReactNode }) {
     loadWatchlist();
   }, []);
 
+  const saveWatchlist = useCallback(async () => {
+    await StorageService.setItem(STORAGE_KEYS.WATCHLIST, watchlist);
+  }, [watchlist]);
+
   useEffect(() => {
     if (!isLoading) {
       saveWatchlist();
     }
-  }, [watchlist, isLoading]);
+  }, [watchlist, isLoading, saveWatchlist]);
 
   const loadWatchlist = async () => {
     const savedWatchlist = await StorageService.getItem<string[]>(
@@ -45,10 +50,6 @@ export function WatchlistProvider({ children }: { children: ReactNode }) {
       setWatchlist(savedWatchlist);
     }
     setIsLoading(false);
-  };
-
-  const saveWatchlist = async () => {
-    await StorageService.setItem(STORAGE_KEYS.WATCHLIST, watchlist);
   };
 
   const addToWatchlist = (ticker: string) => {

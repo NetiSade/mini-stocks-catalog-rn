@@ -4,14 +4,19 @@ import { StatusBar } from "expo-status-bar";
 import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 
+import { useTheme } from "@/contexts/ThemeContext";
 import {
   NavigationDarkTheme,
   NavigationLightTheme,
-} from "@/constants/navigationThemes";
-import { useTheme } from "@/contexts/ThemeContext";
+} from "@/navigation/navigationThemes";
+import {
+  getDefaultScreenOptions,
+  getStockDetailOptions,
+  homeScreenOptions,
+} from "@/navigation/screenOptions";
+import { RootStackParamList } from "@/navigation/types";
 import HomeScreen from "@/screens/HomeScreen";
 import StockDetailScreen from "@/screens/StockDetailScreen";
-import { RootStackParamList } from "@/types/navigation";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -24,11 +29,7 @@ export default function App() {
   );
 
   const screenOptions = useMemo(
-    () => ({
-      contentStyle: { backgroundColor: colors.background },
-      headerStyle: { backgroundColor: colors.background },
-      animation: "fade" as const,
-    }),
+    () => getDefaultScreenOptions(colors.background),
     [colors.background]
   );
 
@@ -39,12 +40,14 @@ export default function App() {
           <Stack.Screen
             name="Home"
             component={HomeScreen}
-            options={{ headerShown: false }}
+            options={homeScreenOptions}
           />
           <Stack.Screen
             name="StockDetail"
             component={StockDetailScreen}
-            options={({ route }) => ({ title: route.params.stock.ticker })}
+            options={({ route }) =>
+              getStockDetailOptions(route.params.stock.ticker)
+            }
           />
         </Stack.Navigator>
         <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />

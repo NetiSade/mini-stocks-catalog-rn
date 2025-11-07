@@ -5,15 +5,11 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { SearchBar } from "@/components/search-bar";
 import { StockItem } from "@/components/stock-item";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { useWatchlist } from "@/contexts/WatchlistContext";
 import { STOCKS_MOCK_DATA, Stock } from "@/data/stocks";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
-  const { watchlistCount } = useWatchlist();
   const insets = useSafeAreaInsets();
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -49,16 +45,8 @@ export default function HomeScreen() {
 
   return (
     <ThemedView style={styles.container}>
-      <View style={styles.header}>
-        <View>
-          <ThemedText type="title">Stocks</ThemedText>
-          <ThemedText style={styles.watchlistCount}>
-            Watchlist: {watchlistCount}
-          </ThemedText>
-        </View>
-        <ThemeToggle />
-      </View>
       <SearchBar
+        containerStyle={styles.searchBar}
         value={searchQuery}
         onChangeText={setSearchQuery}
         placeholder="Search stocks..."
@@ -78,18 +66,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 20,
-    paddingTop: 60,
-    paddingBottom: 20,
-  },
-  watchlistCount: {
-    fontSize: 14,
-    opacity: 0.7,
-    marginTop: 4,
+  searchBar: {
+    paddingBottom: 0,
+    marginVertical: 16,
   },
   listContent: {
     paddingHorizontal: 20,

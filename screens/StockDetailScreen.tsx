@@ -5,7 +5,7 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { WatchlistToggle } from "@/components/watchlist-toggle";
 import { useTheme } from "@/contexts/ThemeContext";
-import { RootStackScreenProps } from "@/types/navigation";
+import { RootStackScreenProps } from "@/navigation/types";
 
 export default function StockDetailScreen({
   route,
