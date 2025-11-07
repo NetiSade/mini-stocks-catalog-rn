@@ -11,7 +11,7 @@ import { StyleSheet, View } from "react-native";
 import "react-native-reanimated";
 
 import { Colors } from "@/constants/theme";
-import { useColorScheme } from "@/hooks/use-color-scheme";
+import { useTheme } from "@/contexts/ThemeContext";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import HomeScreen from "@/screens/HomeScreen";
 import StockDetailScreen from "@/screens/StockDetailScreen";
@@ -42,7 +42,7 @@ const CustomDarkTheme: Theme = {
 };
 
 export default function App() {
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useTheme();
   const colors = useThemeColors();
 
   const theme = useMemo(

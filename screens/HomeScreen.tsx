@@ -10,6 +10,7 @@ import {
 
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { useTheme } from "@/contexts/ThemeContext";
 import { STOCKS_MOCK_DATA, Stock } from "@/data/stocks";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { RootStackScreenProps } from "@/types/navigation";
@@ -18,6 +19,7 @@ export default function HomeScreen() {
   const navigation =
     useNavigation<RootStackScreenProps<"Home">["navigation"]>();
   const colors = useThemeColors();
+  const { toggleTheme, colorScheme } = useTheme();
 
   const handleStockPress = (stock: Stock) => {
     navigation.navigate("StockDetail", { stock });
@@ -59,6 +61,15 @@ export default function HomeScreen() {
     <ThemedView style={styles.container}>
       <View style={styles.header}>
         <ThemedText type="title">Stocks</ThemedText>
+        <TouchableOpacity
+          onPress={toggleTheme}
+          style={styles.themeToggle}
+          activeOpacity={0.7}
+        >
+          <ThemedText style={styles.themeIcon}>
+            {colorScheme === "dark" ? "☀️" : "🌙"}
+          </ThemedText>
+        </TouchableOpacity>
       </View>
       <FlatList
         data={STOCKS_MOCK_DATA}
@@ -76,9 +87,23 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 20,
     paddingTop: 60,
     paddingBottom: 20,
+  },
+  themeToggle: {
+    padding: 8,
+    minWidth: 44,
+    minHeight: 44,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  themeIcon: {
+    fontSize: 24,
+    lineHeight: 28,
   },
   listContent: {
     paddingHorizontal: 20,
