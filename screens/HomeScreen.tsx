@@ -1,9 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useMemo, useState } from "react";
 import {
   FlatList,
   Image,
   StyleSheet,
+  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -20,6 +21,20 @@ export default function HomeScreen() {
     useNavigation<RootStackScreenProps<"Home">["navigation"]>();
   const colors = useThemeColors();
   const { toggleTheme, colorScheme } = useTheme();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredStocks = useMemo(() => {
+    if (!searchQuery.trim()) {
+      return STOCKS_MOCK_DATA;
+    }
+
+    const query = searchQuery.toLowerCase();
+    return STOCKS_MOCK_DATA.filter(
+      (stock) =>
+        stock.ticker.toLowerCase().includes(query) ||
+        stock.description.toLowerCase().includes(query)
+    );
+  }, [searchQuery]);
 
   const handleStockPress = (stock: Stock) => {
     navigation.navigate("StockDetail", { stock });
@@ -71,8 +86,25 @@ export default function HomeScreen() {
           </ThemedText>
         </TouchableOpacity>
       </View>
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={[
+            styles.searchInput,
+            {
+              backgroundColor: colors.cardBackground,
+              color: colors.text,
+            },
+          ]}
+          placeholder="Search stocks..."
+          placeholderTextColor={colors.icon}
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
+      </View>
       <FlatList
-        data={STOCKS_MOCK_DATA}
+        data={filteredStocks}
         renderItem={renderStockItem}
         keyExtractor={(item) => item.ticker}
         contentContainerStyle={styles.listContent}
@@ -104,6 +136,15 @@ const styles = StyleSheet.create({
   themeIcon: {
     fontSize: 24,
     lineHeight: 28,
+  },
+  searchContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 16,
+  },
+  searchInput: {
+    padding: 12,
+    borderRadius: 8,
+    fontSize: 16,
   },
   listContent: {
     paddingHorizontal: 20,
