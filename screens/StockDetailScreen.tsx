@@ -6,6 +6,7 @@ import { ThemedView } from "@/components/themed-view";
 import { WatchlistToggle } from "@/components/watchlist-toggle";
 import { useTheme } from "@/contexts/ThemeContext";
 import { RootStackScreenProps } from "@/navigation/types";
+import { formatPrice } from "@/utils/format";
 
 export default function StockDetailScreen({
   route,
@@ -50,7 +51,7 @@ export default function StockDetailScreen({
             {stock.ticker}
           </ThemedText>
           <ThemedText style={styles.price}>
-            ${stock.price.toFixed(2)}
+            {formatPrice(stock.price)}
           </ThemedText>
         </View>
 

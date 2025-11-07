@@ -5,6 +5,7 @@ import { ThemedText } from "@/components/themed-text";
 import { WatchlistToggle } from "@/components/watchlist-toggle";
 import { useTheme } from "@/contexts/ThemeContext";
 import { Stock } from "@/data/stocks";
+import { formatPrice } from "@/utils/format";
 
 interface StockItemProps {
   stock: Stock;
@@ -46,7 +47,7 @@ export function StockItem({ stock, onPress }: StockItemProps) {
       </View>
       <View style={styles.priceContainer}>
         <ThemedText type="defaultSemiBold" style={styles.price}>
-          ${stock.price.toFixed(2)}
+          {formatPrice(stock.price)}
         </ThemedText>
         <View
           onStartShouldSetResponder={() => true}
