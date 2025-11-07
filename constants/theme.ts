@@ -23,7 +23,7 @@ const tintColorDark = "#fff";
 export const Colors: Record<"light" | "dark", ColorTheme> = {
   light: {
     text: "#11181C",
-    background: "#fff",
+    background: "#ececec",
     tint: tintColorLight,
     icon: "#687076",
     tabIconDefault: "#687076",
