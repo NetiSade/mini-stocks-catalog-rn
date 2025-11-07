@@ -61,7 +61,10 @@ export default function StockDetailScreen({
           style={[styles.button, { backgroundColor: colors.tint }]}
           activeOpacity={0.8}
         >
-          <ThemedText type="defaultSemiBold" style={styles.buttonText}>
+          <ThemedText
+            type="defaultSemiBold"
+            style={[styles.buttonText, { color: colors.buttonText }]}
+          >
             Add to Watchlist
           </ThemedText>
         </TouchableOpacity>
@@ -123,7 +126,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonText: {
-    color: "#fff",
     fontSize: 16,
   },
 });

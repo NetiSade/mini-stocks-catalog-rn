@@ -14,6 +14,7 @@ export interface ColorTheme {
   tabIconSelected: string;
   cardBackground: string;
   logoBackground: string;
+  buttonText: string;
 }
 
 const tintColorLight = "#0a7ea4";
@@ -29,6 +30,7 @@ export const Colors: Record<"light" | "dark", ColorTheme> = {
     tabIconSelected: tintColorLight,
     cardBackground: "#f5f5f7",
     logoBackground: "#e5e5ea",
+    buttonText: "#fff",
   },
   dark: {
     text: "#ECEDEE",
@@ -39,6 +41,7 @@ export const Colors: Record<"light" | "dark", ColorTheme> = {
     tabIconSelected: tintColorDark,
     cardBackground: "#2c2c2e",
     logoBackground: "#48484a",
+    buttonText: "#000",
   },
 };
 
