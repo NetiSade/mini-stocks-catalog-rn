@@ -29,10 +29,8 @@ export default function HomeScreen() {
     }
 
     const query = searchQuery.toLowerCase();
-    return STOCKS_MOCK_DATA.filter(
-      (stock) =>
-        stock.ticker.toLowerCase().includes(query) ||
-        stock.description.toLowerCase().includes(query)
+    return STOCKS_MOCK_DATA.filter((stock) =>
+      stock.ticker.toLowerCase().includes(query)
     );
   }, [searchQuery]);
 
@@ -87,21 +85,32 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </View>
       <View style={styles.searchContainer}>
-        <TextInput
+        <View
           style={[
-            styles.searchInput,
-            {
-              backgroundColor: colors.cardBackground,
-              color: colors.text,
-            },
+            styles.searchWrapper,
+            { backgroundColor: colors.cardBackground },
           ]}
-          placeholder="Search stocks..."
-          placeholderTextColor={colors.icon}
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
+        >
+          <TextInput
+            style={[styles.searchInput, { color: colors.text }]}
+            placeholder="Search stocks..."
+            placeholderTextColor={colors.icon}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            autoCapitalize="none"
+            autoCorrect={false}
+            autoFocus={false}
+          />
+          {searchQuery.length > 0 && (
+            <TouchableOpacity
+              onPress={() => setSearchQuery("")}
+              style={styles.clearButton}
+              activeOpacity={0.7}
+            >
+              <ThemedText style={styles.clearButtonText}>✕</ThemedText>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
       <FlatList
         data={filteredStocks}
@@ -141,10 +150,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 16,
   },
-  searchInput: {
-    padding: 12,
+  searchWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
     borderRadius: 8,
+    paddingHorizontal: 12,
+  },
+  searchInput: {
+    flex: 1,
+    paddingVertical: 12,
     fontSize: 16,
+  },
+  clearButton: {
+    padding: 4,
+    marginLeft: 8,
+  },
+  clearButtonText: {
+    fontSize: 20,
+    opacity: 0.6,
   },
   listContent: {
     paddingHorizontal: 20,
