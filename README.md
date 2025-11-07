@@ -1,50 +1,91 @@
-# Welcome to your Expo app 👋
+# Stocks Mini Catalog
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A React Native mobile app for browsing and managing a stock watchlist with theme support.
 
-## Get started
+## Features
 
-1. Install dependencies
+- 📊 Browse stock catalog with search
+- ⭐ Add/remove stocks to watchlist
+- 🌓 Light/Dark theme toggle
+- 💾 Persistent preferences (theme, watchlist)
+- 📱 Native navigation with React Navigation
+- ✨ Smooth animations
 
-   ```bash
-   npm install
-   ```
+## Tech Stack
 
-2. Start the app
+- **React Native** - Mobile framework
+- **Expo** - Development platform
+- **TypeScript** - Type safety
+- **React Navigation** - Native stack navigation
+- **Context API** - State management
+- **AsyncStorage** - Local persistence
+- **Jest** - Testing framework
 
-   ```bash
-   npx expo start
-   ```
+## Getting Started
 
-In the output, you'll find options to open the app in a
+### Prerequisites
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- Node.js 16+
+- npm or yarn
+- Expo Go app (for mobile testing)
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### Installation
 
 ```bash
-npm run reset-project
+# Install dependencies
+npm install
+
+# Start development server
+npm start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Running the App
 
-## Learn more
+- **iOS Simulator**: Press `i`
+- **Android Emulator**: Press `a`
+- **Web**: Press `w`
+- **Expo Go**: Scan QR code with your phone
 
-To learn more about developing your project with Expo, look at the following resources:
+## Testing
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+# Run all tests
+npm test
 
-## Join the community
+# Run tests in watch mode
+npm run test:watch
 
-Join our community of developers creating universal apps.
+# Run tests with coverage
+npm run test:coverage
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+**Test Coverage:** 15 tests covering data validation, utility functions, and context management.
+
+See [README.test.md](./README.test.md) for detailed testing documentation.
+
+## Project Structure
+
+```
+.
+├── components/        # Reusable UI components
+├── contexts/          # React Context providers
+├── screens/           # Screen components
+├── navigation/        # Navigation configuration
+├── utils/            # Utility functions
+├── data/             # Mock data
+├── constants/        # Theme and constants
+└── __tests__/        # Test files
+```
+
+## Scripts
+
+```bash
+npm start           # Start Expo dev server
+npm test            # Run tests
+npm run lint        # Run ESLint
+npm run test:watch  # Run tests in watch mode
+```
+
+## License
+
+MIT
