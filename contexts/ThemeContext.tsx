@@ -1,36 +1,46 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import { usePreferences } from "@/contexts/PreferencesContext";
 import { useColorScheme as useSystemColorScheme } from "@/hooks/use-color-scheme";
+import React, {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useMemo,
+} from "react";
 
 type ColorScheme = "light" | "dark";
+
 type ThemeContextType = {
   colorScheme: ColorScheme;
   toggleTheme: () => void;
-  isSystemTheme: boolean;
 };
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const systemColorScheme = useSystemColorScheme();
-  const [themeOverride, setThemeOverride] = useState<ColorScheme | null>(null);
+  const { preferences, updateTheme } = usePreferences();
 
-  const colorScheme = themeOverride ?? systemColorScheme ?? "light";
-  const isSystemTheme = themeOverride === null;
+  const colorScheme = preferences.theme ?? systemColorScheme ?? "light";
+  const isSystemTheme = preferences.theme === null;
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     if (isSystemTheme) {
       // First toggle: set to opposite of system
-      setThemeOverride(systemColorScheme === "dark" ? "light" : "dark");
+      updateTheme(systemColorScheme === "dark" ? "light" : "dark");
     } else {
       // Subsequent toggles: switch between light and dark
-      setThemeOverride(colorScheme === "dark" ? "light" : "dark");
+      updateTheme(colorScheme === "dark" ? "light" : "dark");
     }
-  };
+  }, [isSystemTheme, systemColorScheme, colorScheme, updateTheme]);
+
+  const value = useMemo(
+    () => ({ colorScheme, toggleTheme, isSystemTheme }),
+    [colorScheme, isSystemTheme, toggleTheme]
+  );
 
   return (
-    <ThemeContext.Provider value={{ colorScheme, toggleTheme, isSystemTheme }}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
 }
 
@@ -41,4 +51,3 @@ export function useTheme() {
   }
   return context;
 }
-
