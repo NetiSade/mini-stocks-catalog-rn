@@ -94,10 +94,12 @@ const styles = StyleSheet.create({
   },
   ticker: {
     fontSize: 32,
+    lineHeight: 38,
     marginBottom: 8,
   },
   price: {
     fontSize: 28,
+    lineHeight: 34,
     opacity: 0.8,
   },
   descriptionCard: {
