@@ -17,11 +17,9 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useWatchlist } from "@/contexts/WatchlistContext";
 import { STOCKS_MOCK_DATA, Stock } from "@/data/stocks";
 import { useThemeColors } from "@/hooks/use-theme-colors";
-import { RootStackScreenProps } from "@/types/navigation";
 
 export default function HomeScreen() {
-  const navigation =
-    useNavigation<RootStackScreenProps<"Home">["navigation"]>();
+  const navigation = useNavigation();
   const colors = useThemeColors();
   const { toggleTheme, colorScheme } = useTheme();
   const { watchlistCount } = useWatchlist();
