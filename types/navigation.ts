@@ -1,5 +1,5 @@
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { Stock } from "@/data/stocks";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -11,7 +11,7 @@ export type RootStackScreenProps<T extends keyof RootStackParamList> =
 
 declare global {
   namespace ReactNavigation {
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     interface RootParamList extends RootStackParamList {}
   }
 }
-

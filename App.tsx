@@ -9,7 +9,6 @@ import {
   NavigationLightTheme,
 } from "@/constants/navigationThemes";
 import { useTheme } from "@/contexts/ThemeContext";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 import HomeScreen from "@/screens/HomeScreen";
 import StockDetailScreen from "@/screens/StockDetailScreen";
 import { RootStackParamList } from "@/types/navigation";
@@ -17,8 +16,7 @@ import { RootStackParamList } from "@/types/navigation";
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
-  const { colorScheme } = useTheme();
-  const colors = useThemeColors();
+  const { colorScheme, colors } = useTheme();
 
   const navigationTheme = useMemo(
     () => (colorScheme === "dark" ? NavigationDarkTheme : NavigationLightTheme),

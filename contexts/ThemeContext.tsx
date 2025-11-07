@@ -1,3 +1,4 @@
+import { Colors, ColorTheme } from "@/constants/theme";
 import { usePreferences } from "@/contexts/PreferencesContext";
 import { useColorScheme as useSystemColorScheme } from "@/hooks/use-color-scheme";
 import React, {
@@ -12,6 +13,7 @@ type ColorScheme = "light" | "dark";
 
 type ThemeContextType = {
   colorScheme: ColorScheme;
+  colors: ColorTheme;
   toggleTheme: () => void;
 };
 
@@ -24,6 +26,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const colorScheme = preferences.theme ?? systemColorScheme ?? "light";
   const isSystemTheme = preferences.theme === null;
 
+  const colors = useMemo(() => Colors[colorScheme], [colorScheme]);
+
   const toggleTheme = useCallback(() => {
     if (isSystemTheme) {
       // First toggle: set to opposite of system
@@ -35,8 +39,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, [isSystemTheme, systemColorScheme, colorScheme, updateTheme]);
 
   const value = useMemo(
-    () => ({ colorScheme, toggleTheme, isSystemTheme }),
-    [colorScheme, isSystemTheme, toggleTheme]
+    () => ({ colorScheme, colors, toggleTheme }),
+    [colorScheme, colors, toggleTheme]
   );
 
   return (

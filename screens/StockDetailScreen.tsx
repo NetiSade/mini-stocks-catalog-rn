@@ -4,7 +4,7 @@ import { Image, ScrollView, StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { WatchlistToggle } from "@/components/watchlist-toggle";
-import { useThemeColors } from "@/hooks/use-theme-colors";
+import { useTheme } from "@/contexts/ThemeContext";
 import { RootStackScreenProps } from "@/types/navigation";
 
 export default function StockDetailScreen({
@@ -12,7 +12,7 @@ export default function StockDetailScreen({
   navigation,
 }: RootStackScreenProps<"StockDetail">) {
   const { stock } = route.params;
-  const colors = useThemeColors();
+  const { colors } = useTheme();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -24,15 +24,20 @@ export default function StockDetailScreen({
     });
   }, [navigation, stock.ticker]);
 
+  const logoContainerStyle = [
+    styles.logoContainer,
+    { backgroundColor: colors.logoBackground },
+  ];
+
+  const descriptionCardStyle = [
+    styles.descriptionCard,
+    { backgroundColor: colors.cardBackground },
+  ];
+
   return (
     <ThemedView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View
-          style={[
-            styles.logoContainer,
-            { backgroundColor: colors.logoBackground },
-          ]}
-        >
+        <View style={logoContainerStyle}>
           <Image
             source={{ uri: stock.logoUrl }}
             style={styles.logo}
@@ -49,12 +54,7 @@ export default function StockDetailScreen({
           </ThemedText>
         </View>
 
-        <View
-          style={[
-            styles.descriptionCard,
-            { backgroundColor: colors.cardBackground },
-          ]}
-        >
+        <View style={descriptionCardStyle}>
           <ThemedText type="subtitle" style={styles.descriptionTitle}>
             About
           </ThemedText>

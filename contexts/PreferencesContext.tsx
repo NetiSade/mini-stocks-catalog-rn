@@ -3,6 +3,7 @@ import { StorageService } from "@/services/storage";
 import React, {
   createContext,
   ReactNode,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -38,12 +39,16 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
     loadPreferences();
   }, []);
 
+  const savePreferences = useCallback(async () => {
+    await StorageService.setItem(STORAGE_KEYS.USER_PREFERENCES, preferences);
+  }, [preferences]);
+
   // Save preferences whenever they change
   useEffect(() => {
     if (!isLoading) {
       savePreferences();
     }
-  }, [preferences, isLoading]);
+  }, [preferences, isLoading, savePreferences]);
 
   const loadPreferences = async () => {
     const savedPreferences = await StorageService.getItem<UserPreferences>(
@@ -53,10 +58,6 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
       setPreferences(savedPreferences);
     }
     setIsLoading(false);
-  };
-
-  const savePreferences = async () => {
-    await StorageService.setItem(STORAGE_KEYS.USER_PREFERENCES, preferences);
   };
 
   const updateTheme = (theme: ColorScheme | null) => {
