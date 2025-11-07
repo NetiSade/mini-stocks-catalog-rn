@@ -34,8 +34,10 @@ export default function HomeScreen() {
     }
 
     const query = searchQuery.toLowerCase();
-    return STOCKS_MOCK_DATA.filter((stock) =>
-      stock.ticker.toLowerCase().includes(query)
+    return STOCKS_MOCK_DATA.filter(
+      (stock) =>
+        stock.ticker.toLowerCase().includes(query) ||
+        stock.description.toLowerCase().includes(query)
     );
   }, [searchQuery]);
 
