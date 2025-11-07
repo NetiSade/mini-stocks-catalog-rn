@@ -1,22 +1,28 @@
-import React from "react";
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import React, { useLayoutEffect } from "react";
+import { Image, ScrollView, StyleSheet, View } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { WatchlistToggle } from "@/components/watchlist-toggle";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { RootStackScreenProps } from "@/types/navigation";
 
 export default function StockDetailScreen({
   route,
+  navigation,
 }: RootStackScreenProps<"StockDetail">) {
   const { stock } = route.params;
   const colors = useThemeColors();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <View style={styles.headerRight}>
+          <WatchlistToggle ticker={stock.ticker} />
+        </View>
+      ),
+    });
+  }, [navigation, stock.ticker]);
 
   return (
     <ThemedView style={styles.container}>
@@ -56,18 +62,6 @@ export default function StockDetailScreen({
             {stock.description}
           </ThemedText>
         </View>
-
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: colors.tint }]}
-          activeOpacity={0.8}
-        >
-          <ThemedText
-            type="defaultSemiBold"
-            style={[styles.buttonText, { color: colors.buttonText }]}
-          >
-            Add to Watchlist
-          </ThemedText>
-        </TouchableOpacity>
       </ScrollView>
     </ThemedView>
   );
@@ -119,13 +113,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     opacity: 0.8,
   },
-  button: {
-    padding: 16,
-    borderRadius: 12,
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  buttonText: {
-    fontSize: 16,
+  headerRight: {
+    marginRight: 8,
   },
 });

@@ -11,7 +11,9 @@ import {
 
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { WatchlistToggle } from "@/components/watchlist-toggle";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useWatchlist } from "@/contexts/WatchlistContext";
 import { STOCKS_MOCK_DATA, Stock } from "@/data/stocks";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { RootStackScreenProps } from "@/types/navigation";
@@ -21,6 +23,7 @@ export default function HomeScreen() {
     useNavigation<RootStackScreenProps<"Home">["navigation"]>();
   const colors = useThemeColors();
   const { toggleTheme, colorScheme } = useTheme();
+  const { watchlistCount } = useWatchlist();
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredStocks = useMemo(() => {
@@ -64,16 +67,31 @@ export default function HomeScreen() {
           {item.description}
         </ThemedText>
       </View>
-      <ThemedText type="defaultSemiBold" style={styles.price}>
-        ${item.price.toFixed(2)}
-      </ThemedText>
+      <View style={styles.priceContainer}>
+        <ThemedText type="defaultSemiBold" style={styles.price}>
+          ${item.price.toFixed(2)}
+        </ThemedText>
+        <View
+          onStartShouldSetResponder={() => true}
+          onTouchEnd={(e) => e.stopPropagation()}
+        >
+          <WatchlistToggle ticker={item.ticker} />
+        </View>
+      </View>
     </TouchableOpacity>
   );
 
   return (
     <ThemedView style={styles.container}>
       <View style={styles.header}>
-        <ThemedText type="title">Stocks</ThemedText>
+        <View>
+          <ThemedText type="title">Stocks</ThemedText>
+          {watchlistCount > 0 && (
+            <ThemedText style={styles.watchlistCount}>
+              Watchlist: {watchlistCount}
+            </ThemedText>
+          )}
+        </View>
         <TouchableOpacity
           onPress={toggleTheme}
           style={styles.themeToggle}
@@ -146,6 +164,11 @@ const styles = StyleSheet.create({
     fontSize: 24,
     lineHeight: 28,
   },
+  watchlistCount: {
+    fontSize: 14,
+    opacity: 0.7,
+    marginTop: 4,
+  },
   searchContainer: {
     paddingHorizontal: 20,
     paddingBottom: 16,
@@ -202,9 +225,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     opacity: 0.7,
   },
+  priceContainer: {
+    alignItems: "flex-end",
+    marginLeft: 12,
+  },
   price: {
     fontSize: 16,
-    marginLeft: 12,
+    marginBottom: 4,
   },
   separator: {
     height: 12,
