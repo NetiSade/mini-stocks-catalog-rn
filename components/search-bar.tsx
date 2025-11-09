@@ -26,6 +26,10 @@ export function SearchBar({
 }: SearchBarProps) {
   const { colors } = useTheme();
 
+  const handleClear = () => {
+    onChangeText("");
+  };
+
   return (
     <View style={[styles.container, containerStyle]}>
       <View
@@ -43,7 +47,7 @@ export function SearchBar({
         />
         {value.length > 0 && (
           <TouchableOpacity
-            onPress={() => onChangeText("")}
+            onPress={handleClear}
             style={styles.clearButton}
             activeOpacity={0.7}
           >

@@ -50,6 +50,7 @@ export default function App() {
             }
           />
         </Stack.Navigator>
+        {/* the color of the status bar text should be the opposite of the color scheme for readability */}
         <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
       </NavigationContainer>
     </View>

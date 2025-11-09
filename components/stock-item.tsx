@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
@@ -15,14 +15,14 @@ interface StockItemProps {
 export function StockItem({ stock, onPress }: StockItemProps) {
   const { colors } = useTheme();
 
-  const handlePress = useCallback(() => {
+  const handlePress = () => {
     onPress(stock);
-  }, [stock, onPress]);
+  };
 
-  const logoContainerStyle = useMemo(
-    () => [styles.logoContainer, { backgroundColor: colors.logoBackground }],
-    [colors.logoBackground]
-  );
+  const logoContainerStyle = [
+    styles.logoContainer,
+    { backgroundColor: colors.logoBackground },
+  ];
 
   return (
     <TouchableOpacity
@@ -49,6 +49,7 @@ export function StockItem({ stock, onPress }: StockItemProps) {
         <ThemedText type="defaultSemiBold" style={styles.price}>
           {formatPrice(stock.price)}
         </ThemedText>
+        {/* catch the touch event and stop it from propagating to the parent for the watchlist toggle*/}
         <View
           onStartShouldSetResponder={() => true}
           onTouchEnd={(e) => e.stopPropagation()}
